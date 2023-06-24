@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  ssl_backend:
+    image: nginx:alpine
+    ports:
+      - 3005:3000
+      # Commented in case 443 is already in use. Can be uncommented if not.
+      # - 443:3000
+    volumes:
+      - ./nginx-ssl.conf:/etc/nginx/conf.d/default.conf
+      - ./Certificate/chain.crt:/etc/ssl/certs/certificate.crt
+      - ./Certificate/cert.key:/etc/ssl/certs/certificate.key
+  backend:
+    image: nginx:alpine
+    ports:
+      - 3006:3000
+      # Commented in case 80 is already in use. Can be uncommented if not.
+      # - 80:3000
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
