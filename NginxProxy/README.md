@@ -119,3 +119,6 @@ https://grimoire.local/init/gt6/serverlist.xml
 https://grimoire.gt5p.local/WeatherForecast  
 https://grimoire.gt5.local/WeatherForecast  
 https://grimoire.gt6.local/WeatherForecast  
+
+![image](https://github.com/Razer2015/TestWebApplication/assets/10619845/f26780b7-4f5f-4d2d-b8f4-4e4e92ed51eb)
+
