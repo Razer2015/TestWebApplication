@@ -1,21 +1,25 @@
 version: '3.2'
 
 services:
-  ssl_backend:
-    image: nginx:alpine
+  grimoire_proxy:
+    image: xfilefin/nginx-unsecure:dev
+    container_name: grimoire_proxy
     ports:
-      - 3005:3000
-      # Commented in case 443 is already in use. Can be uncommented if not.
-      # - 443:3000
+      - 443:443
     volumes:
-      - ./nginx-ssl.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx-base.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx-grimoire.gt5p.conf:/etc/nginx/conf.d/nginx-grimoire.gt5p.conf
+      - ./nginx-grimoire.gt5.conf:/etc/nginx/conf.d/nginx-grimoire.gt5.conf
+      - ./nginx-grimoire.gt6.conf:/etc/nginx/conf.d/nginx-grimoire.gt6.conf
       - ./Certificate/chain.crt:/etc/ssl/certs/certificate.crt
       - ./Certificate/cert.key:/etc/ssl/certs/certificate.key
-  backend:
-    image: nginx:alpine
-    ports:
-      - 3006:3000
-      # Commented in case 80 is already in use. Can be uncommented if not.
-      # - 80:3000
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./init:/var/www/init
+  grimoire_gt5p:
+    image: xfilefin/test-backend:latest
+    container_name: grimoire_gt5p
+  grimoire_gt5:
+    image: xfilefin/test-backend:latest
+    container_name: grimoire_gt5
+  grimoire_gt6:
+    image: xfilefin/test-backend:latest
+    container_name: grimoire_gt6

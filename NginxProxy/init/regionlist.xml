@@ -1,0 +1,5 @@
+<servers>
+    <gt5p url="https://grimoire.local/init/gt5p/serverlist.xml">Gran Turismo 5 Prologue</gt5p>
+    <gt5 url="https://grimoire.local/init/gt5/serverlist.xml">Gran Turismo 5</gt5>
+    <gt6 url="https://grimoire.local/init/gt6/serverlist.xml">Gran Turismo 6</gt6>
+</servers>

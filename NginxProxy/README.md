@@ -62,29 +62,60 @@ openssl x509 -req -sha256 -days 1096 -in ./Certificate/cert.csr -CA ./CA/ssl.crt
 cat ./Certificate/cert.crt ./CA/ssl.crt > ./Certificate/chain.crt
 ```
 ---
+## Building the application image
+
+```
+docker build -t xfilefin/test-backend:latest ..\ --file ..\TestWebApplication\Dockerfile
+```
+
+---
+## Edit the Windows hosts file
+
+You need to add the following entries to Windows hosts file (`C:\Windows\System32\drivers\etc\hosts`) when testing this on Windows.
+
+```
+127.0.0.1 grimoire.local
+127.0.0.1 grimoire.gt5p.local
+127.0.0.1 grimoire.gt5.local
+127.0.0.1 grimoire.gt6.local
+```
+
+---
 ## Running the application and proxy
 
-### Starting the backend
-
-Run the `http` profile
-
-### Starting the containers (for starting the nginx proxy)
+### Starting the containers
 ```
 docker-compose up
 ```
 
-### Shutting down the containers (for shutting down the nginx proxy)
+or
+
+```
+docker stack deploy -c docker-compose.yml grimoire
+```
+
+### Shutting down the containers
 ```
 docker-compose down
 ```
 
-### Browsing the site
+or
 
-With SSL: https://localhost:3005/WeatherForecast
+```
+docker stack rm grimoire
+```
 
-Without SSL: http://localhost:3006/WeatherForecast
+### Browsing the endpoints  
+  
+**Region list**  
+https://grimoire.local//init/regionlist.xml  
 
-### Notes
-- If you went with the defaults, you can add `grimoire.local` to your Windows hosts file. Then uncomment the ports 80 and 443 from the `docker-compose.yml` to use the following endpoints:
-  - With SSL: https://grimoire.local/WeatherForecast
-  - Without SSL: http://grimoire.local/WeatherForecast
+**Server lists**  
+https://grimoire.local/init/gt5p/serverlist.xml  
+https://grimoire.local/init/gt5/serverlist.xml  
+https://grimoire.local/init/gt6/serverlist.xml  
+
+**Grimoire backends**  
+https://grimoire.gt5p.local/WeatherForecast  
+https://grimoire.gt5.local/WeatherForecast  
+https://grimoire.gt6.local/WeatherForecast  
