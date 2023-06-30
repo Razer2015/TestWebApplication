@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15.3-alpine3.18
+    environment:
+      - POSTGRES_PASSWORD=my-secret-password
+      - POSTGRES_USER=grimoire
+    volumes:
+      - grimoire-db:/var/lib/postgresql/data
+      # - /var/data/scripts:/usr/local/scripts # Could mount folder at host for migration scripts and what not
+    ports:
+      - 5432:5432
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        # max_attempts: 10
+        window: 180s
+      resources:
+        limits:
+          cpus: '1.00'
+          # memory: 2048M
+        reservations:
+          cpus: '0.50'
+          memory: 512M
+    networks:
+      - network
+
+networks:
+  network:
+    driver: overlay
+
+volumes:
+  grimoire-db:

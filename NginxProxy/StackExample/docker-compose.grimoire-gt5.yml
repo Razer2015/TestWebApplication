@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  gt5:
+    image: xfilefin/test-backend:latest
+    environment:
+      DATABASE_USER: grimoire
+      DATABASE_PASSWORD: my-secret-password
+      DATABASE_HOST: postgres
+      DATABASE_NAME: grimoire_gt5
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 10s
+    networks:
+      - network
+      - proxy_network
+      - db_network
+
+networks:
+  network:
+    driver: overlay
+  proxy_network:
+    name: grimoire-proxy_network
+    external: true
+  db_network:
+    name: grimoire-db_network
+    external: true
